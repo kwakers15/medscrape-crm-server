@@ -11,6 +11,10 @@ const listSchema = new mongoose.Schema({
     trim: true
   },
   kols: [{
+    npi: {
+      type: String,
+      required: true
+    },
     name: {
       type: String,
       required: true,

@@ -81,10 +81,10 @@ app.post('/:userId/list/:listId/kol', async (req, res) => {
 })
 
 // DELETE a kol by its listid and kolid
-app.delete('/:userId/list/:listId/kol/:kolId', async (req, res) => {
+app.delete('/:userId/list/:listId/kol/:npi', async (req, res) => {
   const _id = req.params.listId
   const userID = req.params.userId
-  const kolID = req.params.kolId
+  const npi = req.params.npi
 
   try {
     const list = await List.findOne({ _id, userID })
@@ -92,7 +92,7 @@ app.delete('/:userId/list/:listId/kol/:kolId', async (req, res) => {
       res.status(404).send({ error: 'No list found for user ' + userID + ' and listId ' + _id })
       return
     }
-    const indexOfKol = list.kols.findIndex(kol => kol._id == kolID)
+    const indexOfKol = list.kols.findIndex(kol => kol.npi == npi)
     if (indexOfKol === -1) {
       res.status(404).send({ error: 'The specified kol was not found in the list' })
       return
@@ -134,17 +134,17 @@ app.get('/:userId/list/:listId/kol', async (req, res) => {
 })
 
 // GET a kol by its id
-app.get('/:userId/list/:listId/kol/:kolId', async (req, res) => {
+app.get('/:userId/list/:listId/kol/:npi', async (req, res) => {
   const _id = req.params.listId
   const userID = req.params.userId
-  const kolID = req.params.kolId
+  const npi = req.params.npi
 
   try {
     const list = await List.findOne({ _id, userID })
     if (!list) {
       res.status(404).send({ 'error': 'No list found for user ' + userID + ' and listId ' + _id })
     }
-    const indexOfKol = list.kols.findIndex(kol => kol._id == kolID)
+    const indexOfKol = list.kols.findIndex(kol => kol.npi == npi)
     if (indexOfKol === -1) {
       res.status(404).send({ error: 'The specified kol was not found in the list' })
       return
@@ -171,10 +171,10 @@ app.delete('/:userId/lists', async (req, res) => {
 })
 
 // PATCH a specific kol
-app.patch('/:userId/list/:listId/kol/:kolId', async (req, res) => {
+app.patch('/:userId/list/:listId/kol/:npi', async (req, res) => {
   const _id = req.params.listId
   const userID = req.params.userId
-  const kolID = req.params.kolId
+  const npi = req.params.npi
 
   const allowedUpdates = ['name', 'notes']
   const updates = Object.keys(req.body)
@@ -189,7 +189,7 @@ app.patch('/:userId/list/:listId/kol/:kolId', async (req, res) => {
       res.status(404).send({ 'error': 'No list found for user ' + userID + ' and listId ' + _id })
       return
     }
-    const indexOfKol = list.kols.findIndex(kol => kol._id == kolID)
+    const indexOfKol = list.kols.findIndex(kol => kol.npi == npi)
     if (indexOfKol === -1) {
       res.status(404).send({ error: 'The specified kol was not found in the list' })
       return
