@@ -3,7 +3,7 @@ require('./db/mongoose')
 const List = require('./models/list')
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT | 3001
 
 app.use(express.json())
 
@@ -73,7 +73,7 @@ app.post('/:userId/list/:listId/kol', async (req, res) => {
     }
     list.kols.push(kol)
     await list.save()
-    res.send(list)
+    res.status(201).send(list)
   }
   catch (e) {
     res.status(400).send(e)
