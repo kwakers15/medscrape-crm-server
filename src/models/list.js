@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const listSchema = new mongoose.Schema({
-  userID: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -26,6 +22,11 @@ const listSchema = new mongoose.Schema({
       trim: true
     }
   }],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  }
 }, {
   timestamps: true
 })
