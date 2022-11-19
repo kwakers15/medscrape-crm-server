@@ -163,11 +163,12 @@ app.get('/lists', auth, async (req, res) => {
   //   catch (e) {
   //      res.status(500).send()
   //   }
-  const lists = await List.find({ owner: req.user._id })
-  if (lists.length) {
+  try {
+    const lists = await List.find({ owner: req.user._id })
     res.send(lists)
-  } else {
-    res.status(400).send({ error: "No lists for user" })
+  }
+  catch (e) {
+    res.status(400).send(e)
   }
 })
 
